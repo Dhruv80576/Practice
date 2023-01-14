@@ -1,0 +1,96 @@
+import java.util.Scanner;
+public class Qu {
+
+    public static int count=0;
+
+    public static Data data[]=new Data[100];
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        while(true){
+            dsply_opt();
+            int temp;
+            temp=sc.nextInt();
+            if(temp==1){
+                count+=1;
+                Data d=new Data();
+                System.out.print("Enter Id:");
+                d.add_id(sc.nextInt());
+                System.out.print("Enter Salary:");
+                int salary=sc.nextInt();
+                if(salary>0){
+                d.add_slry(salary);
+                }
+                else{System.out.println(
+                    "Invalid salary");}
+                data[count-1]=d;
+                sort();
+            }
+            else if(temp==2){
+                
+                System.out.print("Enter index:");
+                int id=sc.nextInt();
+                if(id<=count){
+                    delete(id);
+                }
+                else{
+                    System.out.print("Enter valid index:");
+                }
+            }
+            else if(temp==3){
+                display_data();
+            }
+            else{
+                System.out.println("Invalid Input.\n");
+            }
+        }
+    }
+    private static void display_data() {
+        System.out.println("Id   Salary");
+        sort();
+        for(int i=0;i<count;i++){
+            System.out.println(data[i].get_id(i)+"   "+data[i].get_slry(i));
+        }
+    }
+    public static void delete(int id){
+        Data temp=new Data();
+        temp.add_id(id);
+        temp.add_slry(0);
+        data[id-1]=data[count-1];
+        data[count-1]=temp;
+        count--;
+    }
+    public static void sort() {
+        for(int i=0;i<count;i++){
+            for(int j=0;j<count-i-1;j++){
+                if(data[j].get_id(i)>data[j+1].get_id(i)){
+                    Data d=new Data();
+                    d=data[j];
+                    data[j]=data[j+1];
+                    data[j+1]=d;
+                }
+            }
+        }
+    }
+    public static void dsply_opt() {
+        System.out.print("1:Insert Data\n2:Delete Data\n3:Display Data\n");
+    }
+    
+}
+
+class Data extends Qu{
+    int id;
+    int salary;
+    public void  add_id(int id){
+        this.id=id;
+        }
+    public void add_slry(int slry){
+        this.salary=slry;
+    }
+    public int  get_id(int id){
+        return this.id;
+        }
+    public int get_slry(int slry){
+        return this.salary;
+        
+    }
+}
